@@ -1,0 +1,24 @@
+public class Return implements StatementClass
+{
+  private ExpressionClass expression;
+  
+  public Return(ExpressionClass expression)
+  {
+    this.expression = expression;
+  }
+  
+  public void execute(State inputState)
+  {
+    inputState.update("return", expression.value(inputState));
+  }
+  
+  public String toString()
+  {
+    return ("return" + expression.toString() + ";\n");
+  }
+  
+  public String toStringTabbed(int inputInt)
+  {
+    return "ASDF"; //write code
+  }
+}

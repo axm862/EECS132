@@ -1,0 +1,24 @@
+
+public class HW5Test {
+
+/**
+  * Tests the Contact class
+  */  
+  @Test
+  public void testContactClass(){
+    Contact contact = new Contact("Varun","123","vxg");
+    Contact contact2 = new Contact("Varun","123","vxg");
+    Contact contact3 = new Contact("Garg", "987", "vgd");
+    assertEquals("getName", "Varun", contact.getName());
+    assertEquals("getNumber", "123", contact.getPhoneNumber());
+    assertEquals("getEmail", "vxg", contact.getEmail());
+    contact.setName("Garg");
+    contact.setPhoneNumber("987");
+    contact.setEmail("vgd");
+    assertEquals("setName", "Garg", contact.getName());
+    assertEquals("setNumber", "987", contact.getPhoneNumber());
+    assertEquals("setEmail", "vgd", contact.getEmail());
+    assertEquals("toString", "Varun 123 vxg" contact.toString());
+    assertEquals("equals", true, contact.equals(contact2);
+  }
+}

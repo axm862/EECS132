@@ -1,0 +1,219 @@
+public class Account extends Object
+{
+  private double lineFee;
+  private double rate=0;
+  private double taxRate=0;
+  private double interestRate=0;
+  private int monthUsage=0;
+  private int expectedMonthlyUsage=0;
+  private int pastYearUsage =0;
+  private double balance=0;
+  private double monthBill=0;
+  private double amountPaidThisMonth=0;
+  private double amount=0;
+  private double currentYearUsage=0;
+  private Customer customer;
+  private Date date;
+  private boolean isOpen;
+  private boolean monthlyPlan;
+  
+  public Account(double lineFee, double rate, double taxRate, double interestRate, int expectedMonthlyUsage)
+  {
+    this.lineFee = lineFee;
+    this.rate = rate;
+    this.taxRate = taxRate;
+    this.interestRate = interestRate;
+    this.expectedMonthlyUsage = expectedMonthlyUsage;
+  }
+  public Account(double lineFee, double rate, double taxRate, double interestRate, int expectedMonthlyUsage, Customer customer, Date date)
+  {
+   this(lineFee,rate,taxRate,interestRate,expectedMonthlyUsage);
+   this.customer = customer;
+   this.date = date;
+  }
+  public void setLineFee(double lineFee)
+  {
+    this.lineFee = lineFee;
+  }
+  public double getLineFee()
+  {
+    return lineFee;
+  }
+  public void setRate(double rate)
+  {
+    this.rate = rate;
+  }
+  public double getRate()
+  {
+    return rate;
+  }
+  public void setSalesTaxRate(double taxRate)
+  {
+    this.taxRate = taxRate;
+  }
+  public double getSalesTaxRate()
+  {
+    return taxRate;
+  }
+  public void setInterestRate(double interestRate)
+  {
+    this.interestRate = interestRate;
+  }
+  public double getInterestRate()
+  {
+    return interestRate;
+  }
+  public void setMonthUsage(int monthUsage)
+  {
+    this.monthUsage = monthUsage;
+  }
+  public int getMonthUsage()
+  {
+    return monthUsage;
+  }
+  public int getPastYearUsage()
+  {
+    pastYearUsage = expectedMonthlyUsage*12;
+    return pastYearUsage;
+  }
+  public double getBalance()
+  {
+    return balance;
+  }
+  public double getMonthBill()
+  {
+    return monthBill;
+  }
+  public double getAmountPaidThisMonth()
+  {
+    return amountPaidThisMonth;
+  }
+  public void receivePayment(double amount)
+  {
+    this.amount = amount;
+    balance = balance-amount;
+    amountPaidThisMonth = amountPaidThisMonth+amount;
+  }
+  public void openAccount(Date date, Customer customer)
+  {
+    this.date = date;
+    this.customer = customer;
+    isOpen = true;
+  }
+  public boolean isOpen()
+  {
+    return isOpen;
+  }
+  public Date getAnniversaryDate()
+  {
+    return date;
+  }
+  public Customer getCustomer()
+  {
+    return customer;
+  }
+  
+  public void endOfYearProcessing()
+  {
+    if(isOpen == false)
+    {
+    }
+    else
+    {
+      if(monthlyPlan==false)
+      {
+        expectedMonthlyUsage = (int)currentYearUsage/12; 
+      } 
+      if(monthlyPlan == true)
+      {
+        expectedMonthlyUsage = (int)(currentYearUsage+(currentYearUsage - pastYearUsage))/12;
+        pastYearUsage = (int)currentYearUsage;
+        currentYearUsage = 0; 
+      }
+    }
+  }
+  public void endOfMonthProcessing()
+  {
+    if(isOpen == false)
+    {
+    }
+    else
+    { 
+      currentYearUsage = currentYearUsage + monthUsage;
+      balance = (balance + (lineFee+(monthUsage*rate))*(1+taxRate));
+      if(amountPaidThisMonth < monthBill)
+      {
+        balance = balance + ((1+interestRate)*(monthBill-amountPaidThisMonth)); 
+      }
+      if(monthlyPlan == false)
+      {
+       if(balance <= 0)
+       {
+         monthBill = 0;
+       }
+       else
+       {
+         monthBill = balance;
+       }
+      }
+      if(monthlyPlan == true)
+      {
+        if(balance > amountPaidThisMonth)
+        {
+          monthBill = ((balance-amountPaidThisMonth)*(1+interestRate)+lineFee+(expectedMonthlyUsage*rate)+(lineFee*taxRate)+(expectedMonthlyUsage*rate*taxRate));
+        }
+        if(balance <= amountPaidThisMonth)
+        {
+          monthBill = ((balance-amountPaidThisMonth)+lineFee+(expectedMonthlyUsage*rate)+(lineFee*taxRate)+(expectedMonthlyUsage*rate*taxRate)); 
+        }
+      }
+    }
+  }
+  public boolean isOnMonthlyPlan()
+  { 
+    return monthlyPlan;
+  }
+  public void turnOffMonthlyPlan()
+  {
+    monthlyPlan = false;
+    if(isOpen == true)
+    {
+      expectedMonthlyUsage = pastYearUsage/12;
+    }    
+  }
+  public void turnOnMonthlyPlan()
+  {
+    monthlyPlan = true;
+     if(isOpen == true)
+     {
+       expectedMonthlyUsage = (int)(pastYearUsage-currentYearUsage);//dividedby(numOfMonthsFromCurrentDate-numOfMonthsFromAniversaryDate)
+       if(expectedMonthlyUsage <= 0)
+       {
+         expectedMonthlyUsage = 0;
+       }
+     }
+  }
+  public void processDate(Date date)
+  {
+    if(isOpen == false)
+    {
+    }
+    else
+    {
+      if((this.date == date))
+      {
+       this.endOfYearProcessing(); 
+      }
+      if(this.date.getDay() == date.getDay())
+      {
+        this.endOfMonthProcessing();
+      }
+    }
+  }
+}
+  
+  
+  
+  
+  
+  

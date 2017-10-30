@@ -1,0 +1,4 @@
+public class BooleanOperation implements BooleanExpressionClass
+{
+  private Operator operator;
+  private 

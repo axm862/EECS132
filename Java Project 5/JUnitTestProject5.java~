@@ -1,0 +1,42 @@
+import org.junit.*;
+import static org.junit.Assert.*;
+import java.util.LinkedList;
+import java.util.*;
+public class HW5Test 
+{
+  /**
+  * Tests the Contact class
+  */  
+  @Test
+  public void testContactClass() {
+    Contact contact = new Contact("Varun","123","vxg");
+    Contact contact2 = new Contact("Varun","123","vxg");
+    Contact contact3 = new Contact("Garg", "987", "vgd");
+    assertEquals("getName", "Varun", contact.getName());
+    assertEquals("getNumber", "123", contact.getPhoneNumber());
+    assertEquals("getEmail", "vxg", contact.getEmail());
+    contact.setName("Garg");
+    contact.setPhoneNumber("987");
+    contact.setEmail("vgd");
+    System.out.println(contact3.toString());
+    System.out.println(contact3.toString());
+    assertEquals("setName", "Garg", contact.getName());
+    assertEquals("setNumber", "987", contact.getPhoneNumber());
+    assertEquals("setEmail", "vgd", contact.getEmail());
+    assertEquals("toString", "Garg 987 vgd", contact.toString());
+    assertEquals("equals", false, contact.equals(contact2));
+    assertEquals("equals", true, contact.equals(contact3));
+  }
+  
+  @Test
+  public void testLLNode() 
+  {
+    Contact contact = new Contact("Varun","123","vxg");
+    LLNode<Contact> node = new LLNode<Contact>(contact, null);
+    assertEquals("getElement", contact, node.getElement());
+    assertEquals("getNext", null, node.getNext());
+  }
+   // LLNode<Contact> node = new LLNode<Contact>(contact1, contact2);
+    
+  }
+}

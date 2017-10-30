@@ -1,0 +1,6 @@
+public interface StatementClass
+{
+  public abstract void execute(State inputState);
+  public abstract String toString();
+  public abstract String toStringTabbed(int num);
+}

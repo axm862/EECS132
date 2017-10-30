@@ -1,0 +1,18 @@
+public class Comparison implements BooleanExpressionClass
+{
+  private Operator operator;
+  private Expression expressionOne;
+  private Expression expressionTwo;
+  private int storedValue;
+  public enum Operator { LT, LTE, GE, GTE, EQ, NEQ; }
+  
+  public Comparison(Operator operator, Expression expressionOne, Expression expressionTwo)
+  {
+    this.operator = operator;
+    this.expressionOne = expressionOne;
+    this.expressionTwo = expressionTwo;
+  }
+  
+  public boolean value(State inputState)
+  {
+    

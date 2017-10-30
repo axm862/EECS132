@@ -1,0 +1,26 @@
+public class Assignment implements StatementClass
+{
+  private Variable variable;
+  private ExpressionClass expression;
+  
+  public Assignment(Variable variable, ExpressionClass expression)
+  {
+    this.variable = variable;
+    this.expression = expression;
+  }
+  
+  public void execute(State inputState)
+  {
+    inputState.update(variable.toString(), expression.value(inputState));
+  }
+  
+  public String toString()
+  {
+    return (expression.toString());
+  }
+  
+  public String toStringTabbed(int num)
+  {
+    //add code
+  }
+}

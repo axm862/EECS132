@@ -1,0 +1,5 @@
+public class ArithmeticOperation 
+{
+  public enum Operator { Add, Sub, Mult, Div, Rem; }
+  
+  public ArithmeticOperation(Operator operator, 

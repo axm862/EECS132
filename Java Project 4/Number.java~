@@ -1,0 +1,14 @@
+public class Number 
+{  
+  private int inpNum;
+  
+  public Number(int inpMun) 
+  {
+    this.inpNum = inpNum;
+  }
+  
+  public int value(State inpState) 
+  {
+    return inpState.lookup("" + inpNum);
+  }
+}

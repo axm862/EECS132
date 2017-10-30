@@ -1,0 +1,19 @@
+public class Function 
+{
+  private String name;
+  private StatementClass statement;
+  private Variable[] variable;
+  
+  public Function(String name, StatementClass statement, Variable[] variable)
+  {
+    this.name = name;
+    this.statement = statement;
+    this.variable = variable;
+  }
+  
+  public String toString()
+  {
+    return "ASDF"; //write code
+  }
+}
+                    

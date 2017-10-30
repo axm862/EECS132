@@ -1,0 +1,15 @@
+public class JavaProject4
+{
+  /**
+  * Test the State class
+  */  
+  @Test
+  public void testState()
+  {
+    State a = new State();
+    a.update("hello", 5);
+    assertEquals("Looking up given value", 5, a.lookup("hello"));
+    assertEquals("Looking a empty value", 0, a.lookup("duck"));
+  }
+  
+}

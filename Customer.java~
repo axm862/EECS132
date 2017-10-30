@@ -1,0 +1,85 @@
+public class Customer
+{
+  private String firstName;
+  private String lastName;
+  private String address;
+  private Account electricAccount;
+  private Account gasAccount;
+  private Account waterAccount;
+  private Date date;
+  
+  public Customer(String lastName, String address)
+  {
+   this.lastName = lastName;
+   this.address = address;
+  }
+  public Customer(String firstName, String lastName, String address, Date date)
+  {
+    this(lastName,address);
+    this.firstName = firstName;
+    this.date = date;
+  }
+  public void setFirstName(String firstName)
+  {
+    this.firstName = firstName;
+  }
+  public String getFirstName()
+  {
+    return firstName;
+  }
+  public void setLastName(String lastName)
+  {
+    this.lastName = lastName;
+  }
+  public String getLastName()
+  {
+    return lastName;
+  }
+  public void setAddress(String address)
+  {
+    this.address = address;
+  }
+  public String getAddress()
+  {
+    return address;
+  }
+  public void setElectricAccount(Account electricAccount)
+  {
+    this.electricAccount = electricAccount;
+  }
+  public Account getElectricAccount()
+  {
+    return electricAccount;
+  }
+  public void setGasAccount()
+  {
+    this.gasAccount = gasAccount;
+  }
+  public Account getGasAccount()
+  {
+    return gasAccount;
+  }
+  public void setWaterAccount(Account waterAccount)
+  {
+    this.waterAccount = waterAccount;
+  }
+  public Account getWaterAccount()
+  {
+    return waterAccount;
+  }
+  public void setDate(Date date)
+  {
+    this.date = date;
+  }
+  public Date getDate()
+  {
+    return date;
+  }
+  public void incrementDate()
+  {
+    date.incrementDay();
+    electricAccount.processDate((Date) date);
+    gasAccount.processDate((Date) date);
+    waterAccount.processDate((Date) date);
+  } 
+}

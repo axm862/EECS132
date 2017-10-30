@@ -1,0 +1,170 @@
+import java.util.*;
+import java.util.LinkedList;
+/*
+ * A class representing a database that contains DatabaseTypes
+ * @author Varun Garg
+ */ 
+
+public class Database<E extends DatabaseType> {
+  //stores the head of the link list
+  private LLNode<E> front;
+  //stores the data of the database ina sorted manner
+  private Hashtable<String, ArrayList<E>> hashtable = new Hashtable<String, ArrayList<E>>();
+
+  /**
+   * adds an element to the database
+   * @param element is the element to be added to the database
+   */ 
+  public void add(E element) {
+    this.front = new LLNode<E>(element, front);
+    this.hashtable.clear();
+  }
+  
+  /**
+   * deletes an element for the database
+   * @param element is the element to be deleted
+   */ 
+  public void delete(E element) {
+    LLNode<E> nodeptr; //is a count to go through the database in the loop
+    nodeptr = front;
+    if(nodeptr.getElement().equals(element) && nodeptr.getNext() == null) {
+      front = null;
+    }
+    
+    else if(nodeptr.getElement().equals(element) && nodeptr.getNext() == null) {
+      front = nodeptr.getNext();
+    }
+    else if(nodeptr.getNext() != null) {
+      //goes through the database and deletes every value that matches the element
+      while(nodeptr.getNext() != null) {
+        if(nodeptr.getNext().equals(element) && nodeptr.getNext().getNext() != null) {
+          nodeptr.setNext(nodeptr.getNext().getNext());
+        }
+        else if(nodeptr.getNext().equals(element) && nodeptr.getNext().getNext() == null) {
+          nodeptr.setNext(null);
+        }
+        nodeptr = nodeptr.getNext();
+      }
+    }
+    this.hashtable.clear();
+  }
+
+  /**
+   * looks up a value on the database and adds them to an linked List which is returned
+   * @param value is the value to be looked up
+   * @param c is the comparator used to compare the values
+   * @return a linkedList containing the value in the database (multiple times if there is mroe than one)
+   */ 
+  public LinkedList<E> lookupInList(E value, Comparator c) {
+    //is the linked list that is returned
+    LinkedList<E> newIndex = new LinkedList<E>();
+    //a count to go through the values stored in a loop
+    LLNode<E> nodeptr = front;
+    //goes through the values and stores a value in the new linked list if they are equal
+    while(nodeptr.getNext() != null) {
+      if(nodeptr.getElement().equals(value)) {
+        newIndex.addFirst(value);
+      }
+    }
+    return newIndex;
+  }
+  
+  /**
+   * Gives a linked list containing all the elements that match the input value
+   * @param value is the value that is used to compare with
+   * @param index is the ArrayList in which the value is used to compare each element
+   * @param c is the input class used to call the method compare
+   * @return gives a linked list with all the elements that match the value
+   */ 
+  public LinkedList<E> lookupInIndex(E value, ArrayList<E> index, Comparator<E> c) {
+    //is the index where one of the desired elements is
+    int ind = Collections.binarySearch(index, value, c);
+    //the linked list that stores the same elements and is the one that is printed out
+    LinkedList<E> newList = new LinkedList<E>();
+    if(ind >= 0) {
+      //keeps counts of the elements after the element at ind
+      int i = ind + 1;
+      //the loops goes through the elements after the ind(where the elements match) and searches for the elemnts that match value
+      while(c.compare(index.get(i), value) == 0) {
+        newList.addFirst(value);
+        i++;
+      }
+      //keeps count of the elements before the element at ind
+      int j = ind - 1;
+      //the loops goes through the elements before the ind(where the elements match) and searches for the elemnts that match value
+      while(c.compare(index.get(j), value) == 0) {
+        newList.addFirst(value);
+        j--;
+      }
+      newList.addFirst(value);
+    }
+    return newList;
+  }
+  
+  /**
+   * The method creates an arraylist and copies teh addresses of the element in the database int eh arraylist
+   * Sorts the arraylist using the comparator and stores it in the hashtable using the key
+   * @param trait is the string that is assigned the arraylist in the hashtable and it is also used to call the getComparaotrByTrait method
+   */ 
+  public void makeIndex(String trait) {
+    if(front != null) {
+      //is the arraylist that stores the elements in the database
+      ArrayList<E> newList = new ArrayList<E>();
+      //is used a a pointer for the elements in the database
+      LLNode<E> nodeptr = front;
+      //goes through the elemets of the database adding the elements in the arraylist
+      if(front.getNext() == null) {
+        newList.add(nodeptr.getElement());
+      }
+      else if(front.getNext() != null){
+        while(nodeptr.getNext() != null) {
+          newList.add(nodeptr.getElement());
+          nodeptr = nodeptr.getNext();
+        }
+      }
+      hashtable.put(trait, newList);
+      //comparater used to sort the arraylist
+      Comparator<E> c = front.getElement().getComparatorByTrait(trait);
+      Collections.sort(newList, c);
+    }
+  }
+  
+  /**
+   * searches for a key in the hashtable that matches the entered string trait
+   * calls lookupInIndex method if there is with the given element and the comparator using the trait
+   * @param trait is teh string that is used as the key to lookup in the hashtable and is used to get the comparator
+   * @param element is the value that is searched int he linkedlist
+   * @return returns the linked list used by the method
+   */ 
+  public LinkedList lookup(String trait, E element) {
+    if(hashtable.containsKey(trait)) {
+      //comparator used to compare the elements
+      Comparator c = element.getComparatorByTrait(trait);
+      return lookupInIndex(element, hashtable.get(trait), c);
+    }
+    else if(front != null) {
+      //comparetor used to compare the elements
+      Comparator c = element.getComparatorByTrait(trait);
+      return lookupInList(element, c);
+    }
+    return new LinkedList<E>();
+  }
+  
+  /**
+   * gives a arraylist from teh hashtable is the arraylist has the key trait
+   * else it calls the makeIndex method with the trait used to create a new index and return that index
+   * @param trait is the string used to lookup in teh hashtable as the key
+   * @return returns the arraylist which has the key trait
+   */ 
+  public ArrayList<E> getList(String trait) {
+    if(hashtable.containsKey(trait)) {
+      return hashtable.get(trait);
+    }
+    else {
+    makeIndex(trait);
+    }
+    return hashtable.get(trait);
+  }
+  
+
+}

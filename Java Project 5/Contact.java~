@@ -1,0 +1,130 @@
+import java.util.*;
+/**
+ * This class stores the name, number and email of a contact
+ * @author Varun Garg
+ */
+
+public class Contact extends Object implements DatabaseType {
+  //stores the name of the contact
+  private String name = "";
+  //stores the phone number of the contact
+  private String phoneNumber = "";
+  //stores the email address of the contact
+  private String email = "";
+  
+  /**
+   * This is the construcot for this class and takes the contact information and stores it
+   * @param name is the name of the contact to be stored
+   * @param phoneNumber is the phone number of the contact to be stored
+   * @param email is the email address to be stored
+   */ 
+  public Contact(String name, String phoneNumber, String email) {
+    this.name = name;
+    this.phoneNumber = phoneNumber;
+    this.email = email;
+  }
+  
+  /**
+   * @return the name of the contact
+   */ 
+  public String getName() {
+    return name;
+  }
+  
+  /**
+   * sets the name of the contact
+   * @param takes the name of the contact to be stored
+   */ 
+  public void setName(String name) {
+    this.name = name;
+  }
+  
+  /**
+   * @return the phone number of the contact
+   */ 
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+  
+  /**
+   * sets the phone number of the contact
+   * @param takes the phone number of the contact to be stored
+   */ 
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+  
+  /**
+   * @return the email of the contact
+   */ 
+  public String getEmail() {
+    return email;
+  }
+
+  /**
+   * sets the email of the contact
+   * @param takes the email of the contact to be stored
+   */ 
+  public void setEmail(String email) {
+    this.email = email;
+  }
+  
+  /**
+   * @return the string representation of the contact
+   */ 
+  @Override
+  public String toString() {
+    return name + " " + phoneNumber + " " + email;
+  }
+  
+  /**
+   * determines if the input contact is the same as the instance contact
+   * @param obj is the input contact
+   * @return a true or flase depending of the contact is the same or not
+   */ 
+  //@Override
+  public boolean equals(Object obj) {
+    if(obj instanceof Contact) {
+      Contact a = (Contact)obj;
+      if(a.getName() != this.getName() || a.getPhoneNumber() != this.getPhoneNumber() || a.getEmail() != this.getEmail()) {
+        return false;
+      }
+    }
+    return true;
+  }
+  
+  /**
+   * this method gives out a comparator to be used a any method that requires to use a comparator
+   * @param trait is the string that is used to determine which part of the contact hsoul dbe compared
+   * @return returns is the comparator 
+   */ 
+  @Override
+  public Comparator<Contact> getComparatorByTrait(String trait) {
+    if (trait.equals("name")){
+      return new Comparator<Contact>() {
+        public int compare(Contact a, Contact b){
+          return a.getName().compareTo(b.getName());
+        }
+      };
+    }
+    else if (trait.equals("phone")){
+      return new Comparator<Contact>() {
+        public int compare(Contact a, Contact b){
+          return a.getPhoneNumber().compareTo(b.getPhoneNumber());
+        }
+      };
+    }
+    else if (trait.equals("email")){
+      return new Comparator<Contact>() {
+        public int compare(Contact a, Contact b){
+          return a.getEmail().compareTo(b.getEmail());
+        }
+      };
+    }
+    return null;
+  }
+  
+}
+  
+  
+  

@@ -1,0 +1,19 @@
+public class Variable 
+{  
+  private String inputString;
+  
+  public Variable(String inputString) 
+  {
+    this.inputString = inputString;
+  }
+  
+  public int value(State inputState) 
+  {
+    return inputState.lookup(inputString);
+  }
+  
+  public String toString() 
+  {
+    return inputString;
+  }
+}

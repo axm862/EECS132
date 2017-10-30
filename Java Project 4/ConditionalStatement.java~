@@ -1,0 +1,36 @@
+public class ConditionalStatement extends StatementClass
+{
+  private BooleanExpressionClass booleanExpression;
+  private StatementClass thenStatement;
+  private StatementClass elseStatement;
+  
+  public ConditionalStatement(BooleanExpressionClass booleanExpression, StatementClass thenStatement, StatementClass elseStatement)
+  {
+    this.booleanExpression = booleanExpression;
+    this.thenStatement = thenStatement;
+    this.elseStatement = elseStatement;
+  }
+  
+  public void execute(State inputState)
+  {
+    if(booleanExpression.value(inputState) == true)
+    {
+      thenStatement.execute(inputState);
+    }
+    else
+    {
+      elseStatement.execute(inputState);
+    }
+  }
+  
+  public String toString()
+  {
+    return ("if (" + BooleanExpessionClass.toString(booleanExpression) + ")\n" + 
+            thenStatement.toStringTabbed(1) + "else\n" + elseStatement.toStringTabbed(1));
+  }
+  
+  public String toStringTabbed(int inputInt)
+  {
+    return "ASDF"; //write code
+  }
+}

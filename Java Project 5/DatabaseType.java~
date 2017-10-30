@@ -1,0 +1,14 @@
+import java.util.*;
+/**
+ * is an interface the caontains the method stub getComparatorByTrait
+ * @author Varun Garg
+ */ 
+public interface DatabaseType<F> {
+  
+  /**
+   * is the method stub for getComparatorByTrait
+   * @param trait is a string input
+   * @return should return a Comparator
+   */ 
+  public Comparator getComparatorByTrait(String trait);
+}

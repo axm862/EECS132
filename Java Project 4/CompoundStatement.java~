@@ -1,0 +1,27 @@
+public class CompoundStatement implements StatementClass
+{
+  private StatementClass[] statement;
+  
+  public CompoundStatement(StatementClass[] statement)
+  {
+    this.statement= statement;
+  }
+  
+  public void execute(State inputState)
+  {
+    for(int i = 0; i < statement.length; i++)
+    {
+      statement[i].execute(inputStatement)
+    }
+  }
+  
+  public String toString()
+  {
+    return (statement.toString());
+  }
+  
+  public String toStringTabbed(int inputInt)
+  {
+    return "ASDF"; //write code
+  }
+}

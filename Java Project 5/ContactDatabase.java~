@@ -1,0 +1,112 @@
+import java.util.Scanner;
+import java.util.*;
+import java.util.LinkedList;
+/**
+ * @author Varun Garg
+ * It is a database that stores contacts
+ */ 
+
+public class ContactDatabase<E extends DatabaseType> extends Database {
+  
+  /**
+   * this method prints a list of all the contacts stored in an iterable
+   * @param contact takes an iterable that contains contacts
+   * @return a list of all the contats stores in the list
+   */ 
+  public void printList(Iterable<Contact> contact) {
+    int i = 1;
+    //goes through the iterable searching for contacts and printing them out
+    for(Contact a : contact) {
+      System.out.println("" + i + a.toString());
+      i++;
+    }
+  }
+  
+  /**
+   * creates a ContactDatabase by taking in input which determines which method to call and what to with the data entered
+   */ 
+  public static void  main(String[] args)  {
+    //is the ContactDatabase that is created and manipulated with(like adding contacts 
+    ContactDatabase contactDatabase = new ContactDatabase();
+    //this scanner is what stores the string that the user enters
+    Scanner scanner = new Scanner (System.in);
+    //tests to see if find was called last
+    boolean test = false;
+    //stores the string from the scanner which is used to compare or add data in different parts of the method
+    String command = "";
+    //is the array list used if the user enters "listby"
+    ArrayList aList = null;
+    //is the linked list used if the user enters "find"
+    LinkedList lList = null;
+    System.out.print("Enter command >> ");
+    command = scanner.next();
+    //loops through the if statements as long as the entered string is not quit
+    while(!command.equals("quit")) {
+      String[] s = new String[3];
+      if(command.startsWith("add")) {
+        s = new String[3];
+        //goes through the array storing the input entered by the user from the scanner
+        for(int i = 0; i < 3; i++) {
+          s[i] = scanner.next();
+        }
+        command = scanner.next();
+        //this is a new contact that is created based on the information entered by the user
+        Contact contact = new Contact(s[0], s[1], s[2]);
+        contactDatabase.add(contact);
+      }
+      else if(command.startsWith("listby")) {
+        command = scanner.next();
+        aList = contactDatabase.getList(command);
+        contactDatabase.printList(aList);
+        command = scanner.next();
+        test = false;
+      }
+      else if(command.equals("find")) {
+        Contact contact2 = null;
+        command = scanner.next();
+        if(command.equals("name")) {
+          contact2 = new Contact(scanner.next(), null, null);
+        }
+        else if(command.equals("phonenumber")) {
+          contact2 = new Contact(null, scanner.next(), null);
+        }
+        else if(command.equals("email")) {
+          contact2 = new Contact(null, null, scanner.next());
+        }
+        lList = contactDatabase.lookup(command, contact2);
+        contactDatabase.printList(lList);
+        command = scanner.next();
+        test = true;
+      }
+      else if(command.equals("delete")) {
+        command = scanner.next();
+        if(test && lList != null) {
+          lList.remove(Integer.parseInt(command));
+        }
+        else if(!test && aList != null) {
+          lList.remove(Integer.parseInt(command));
+        }
+        else {
+          System.out.println("Nothing found");
+        }
+        command = scanner.next();
+      }
+      else if(command.equals("makeindex")) {
+        command = scanner.next();
+        contactDatabase.makeIndex(command);
+        command = scanner.next();
+      }
+      else{
+        System.out.println("Incorrect command");
+        command = scanner.next();
+      }
+    }
+    //if(command.equals("quit")) {
+     scanner.close();
+    //}
+        
+  }
+
+  
+  
+}

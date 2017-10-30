@@ -1,0 +1,6 @@
+public class Expression
+{
+  public abstract int value(State inputState);
+  
+  public abstract String toString();
+}

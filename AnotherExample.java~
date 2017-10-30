@@ -1,0 +1,21 @@
+public class AnotherExample extends Example
+{
+  private int numThree = 0;
+  public AnotherExample(int numOne, int numTwo, int numThree)
+  {
+    super(numOne, numTwo);
+    this.numThree = numThree;
+  }
+  public void setNumThree(int numThree)
+  {
+    this.numThree = numThree;
+  }
+  public int getNumThree()
+  {
+    return numThree;
+  }
+  public int addNumbers(int numOne, int numTwo, int numThree)
+  {
+    return (this.numOne + this.numTwo + this.numThree);
+  }
+}

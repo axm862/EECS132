@@ -1,0 +1,30 @@
+public class Loop implements StatementClass
+{
+  private BooleanExpressionClass booleanExpression;
+  private StatementClass statement;
+  
+  public Loop(BooleanExpressionClass booleanExpression, StatementClass statement)
+  {
+    this.booleanExpression = booleanExpression;
+    this.statement = statement;
+  }
+  
+  public void execute(State inputState)
+  {
+    while(booleanExpression.value(inputState))
+    {
+      statement.execute(inputState);
+    }
+  }
+  
+  public String toString()
+  {
+    return ("while (" + booleanExpression.toString() + ")\n" + statement.toStringTabbed(1));
+  }
+  
+  public String toStringTabbed(int inputInt)
+  {
+    return "ASDF"; //write code
+  }
+}
+            

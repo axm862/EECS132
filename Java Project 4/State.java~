@@ -1,0 +1,17 @@
+public class State
+{
+  private String variableName;
+  private int VariableValue;
+  private Hashtable table;
+  
+  public State(String variableName, int VariableValue)
+  {
+    this.variableName = variableName;
+    this.variableValue = variableValue;
+ 
+  }
+  
+  
+  
+}
+  
